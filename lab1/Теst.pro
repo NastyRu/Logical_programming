@@ -1,5 +1,5 @@
 predicates
-  multi abonent(string, string).
+  abonent(string, string).
 clauses
   abonent(ellen, "111111").
   abonent(ellen, "777777").
@@ -14,4 +14,3 @@ goal
   Name = james,
   write(Name, " numbers: "), nl,
   abonent(Name, Number).
-
