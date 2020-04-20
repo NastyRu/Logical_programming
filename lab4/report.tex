@@ -111,13 +111,55 @@
 \textbf{Программа}
 
 \begin{lstlisting}
-domains  lastname, city, street, model, color, bank = symbol.  telephone, house, flat, price, account, deposit = integer.  adress = adress(city, street, house, flat).predicates  abonent(lastname, telephone, adress).  auto(lastname, city, model, color, price).  depositor(lastname, city, bank, account, deposit).    nameCityPhoneBankByAuto(model, color, lastname, city, 
-					telephone, bank).clauses  abonent(ellen, 111111, adress(moscow, tverskaya, 1, 1)).  abonent(john, 222222, adress(moscow, arbat, 11, 112)).  abonent(tom, 333333, adress(moscow, presnya, 10, 11)).  abonent(eric, 444444, adress(moscow, pokrovka, 21, 55)).  abonent(mark, 555555, adress(moscow, solyanka, 13, 13)).  abonent(mark, 888888, adress(kazan, pushkin, 22, 130)).  abonent(bill, 666666, adress(ekb, lenin, 12, 88)).  abonent(bill, 777777, adress(spb, sadovaya, 1, 12)).  auto(ellen, moscow, bmw, red, 10000).  auto(tom, moscow, mersedes, white, 15000).  auto(eric, moscow, mersedes, white, 20000).  auto(eric, moscow, bmw, black, 15000).  auto(eric, moscow, porshe, red, 30000).  auto(mark, moscow, hyundai, silver, 7000).  auto(bill, ekb, hyundai, black, 10000).  auto(bill, spb, volvo, black, 13000).  depositor(ellen, moscow, sberbank, 10000, 2000).  depositor(john, moscow, sberbank, 10000, 3000).  depositor(john, moscow, vtb, 20000, 5000).  depositor(tom, moscow, gazprom, 5000, 3000).  depositor(eric, moscow, sberbank, 100000, 30000).  depositor(mark, moscow, sberbank, 10000, 2000).  depositor(mark, kazan, vtb, 10000, 2000).  depositor(mark, moscow, gazprom, 10000, 2000).    nameCityPhoneBankByAuto(Model, Color, Name, City, 
-					Telephone, Bank) :-    auto(Name, City, Model, Color, _),    abonent(Name, Telephone, adress(City, _, _, _)),    depositor(Name, City, Bank, _, _).
+domains
+  lastname, city, street, model, color, bank = symbol.
+  telephone, house, flat, price, account, deposit = integer.
+  adress = adress(city, street, house, flat).
+predicates
+  abonent(lastname, telephone, adress).
+  auto(lastname, city, model, color, price).
+  depositor(lastname, city, bank, account, deposit).
+  
+  nameCityPhoneBankByAuto(model, color, lastname, city, 
+					telephone, bank).
+clauses
+  abonent(ellen, 111111, adress(moscow, tverskaya, 1, 1)).
+  abonent(john, 222222, adress(moscow, arbat, 11, 112)).
+  abonent(tom, 333333, adress(moscow, presnya, 10, 11)).
+  abonent(eric, 444444, adress(moscow, pokrovka, 21, 55)).
+  abonent(mark, 555555, adress(moscow, solyanka, 13, 13)).
+  abonent(mark, 888888, adress(kazan, pushkin, 22, 130)).
+  abonent(bill, 666666, adress(ekb, lenin, 12, 88)).
+  abonent(bill, 777777, adress(spb, sadovaya, 1, 12)).
+  auto(ellen, moscow, bmw, red, 10000).
+  auto(tom, moscow, mersedes, white, 15000).
+  auto(eric, moscow, mersedes, white, 20000).
+  auto(eric, moscow, bmw, black, 15000).
+  auto(eric, moscow, porshe, red, 30000).
+  auto(mark, moscow, hyundai, silver, 7000).
+  auto(bill, ekb, hyundai, black, 10000).
+  auto(bill, spb, volvo, black, 13000).
+  depositor(ellen, moscow, sberbank, 10000, 2000).
+  depositor(john, moscow, sberbank, 10000, 3000).
+  depositor(john, moscow, vtb, 20000, 5000).
+  depositor(tom, moscow, gazprom, 5000, 3000).
+  depositor(eric, moscow, sberbank, 100000, 30000).
+  depositor(mark, moscow, sberbank, 10000, 2000).
+  depositor(mark, kazan, vtb, 10000, 2000).
+  depositor(mark, moscow, gazprom, 10000, 2000).
+  
+  nameCityPhoneBankByAuto(Model, Color, Name, City, 
+					Telephone, Bank) :-
+    auto(Name, City, Model, Color, _),
+    abonent(Name, Telephone, adress(City, _, _, _)),
+    depositor(Name, City, Bank, _, _).
 \end{lstlisting}
 
 \begin{lstlisting}[caption=Пример 1. ]
-goal  Model = mersedes,  Color = white,  nameCityPhoneBankByAuto(Model, Color, Name, City, 
+goal
+  Model = mersedes,
+  Color = white,
+  nameCityPhoneBankByAuto(Model, Color, Name, City, 
 					Telephone, Bank).
 \end{lstlisting}
 
@@ -128,7 +170,9 @@ goal  Model = mersedes,  Color = white,  nameCityPhoneBankByAuto(Model, Color
  	№ шага & Сравниваемые термы; результат; подстановка, если есть  & Дальнейшие действия: прямой ход или откат \\ \hline
 	1 & По nameCityPhoneBankByAuto(Model, Color, Name, City, Telephone, Bank) = nameCityPhoneBankByAuto(mersedes, white, Name, City, Telephone, Bank) ищется системой определение отношения (по имени предиката и списку (числу) аргументов) & Определение отношения найдено, заносится в стек nameCityPhoneBankByAuto(mersedes, white, Name, City, Telephone, Bank), прямой ход \\ \hline
 	2 & Начинает <<раскрываться>> правило, т.е. доказывается каждое целевое утверждение в теле правила последовательно слева направо
-	auto(Name, City, Model, Color, \_),    abonent(Name, Telephone, adress(City, \_, \_, \_)),    depositor(Name, City, Bank, \_, \_)
+	auto(Name, City, Model, Color, \_),
+    abonent(Name, Telephone, adress(City, \_, \_, \_)),
+    depositor(Name, City, Bank, \_, \_)
 	
 	& Заносится в стек auto(Name, City, mersedes, white, \_) \\ \hline
 
@@ -194,7 +238,10 @@ goal  Model = mersedes,  Color = white,  nameCityPhoneBankByAuto(Model, Color
 \end{longtable}
 
 \begin{lstlisting}[caption=Пример 2. ]
-goal  Model = bmw,  Color = red,  nameCityPhoneBankByAuto(Model, Color, Name, City, 
+goal
+  Model = bmw,
+  Color = red,
+  nameCityPhoneBankByAuto(Model, Color, Name, City, 
 					Telephone, Bank).
 \end{lstlisting}
 
@@ -205,7 +252,9 @@ goal  Model = bmw,  Color = red,  nameCityPhoneBankByAuto(Model, Color, Name,
  	№ шага & Сравниваемые термы; результат; подстановка, если есть  & Дальнейшие действия: прямой ход или откат \\ \hline
 	1 & По nameCityPhoneBankByAuto(Model, Color, Name, City, Telephone, Bank) = nameCityPhoneBankByAuto(mersedes, white, Name, City, Telephone, Bank) ищется системой определение отношения (по имени предиката и списку (числу) аргументов) & Определение отношения найдено, заносится в стек nameCityPhoneBankByAuto(bmw, red, Name, City, Telephone, Bank), прямой ход \\ \hline
 	2 & Начинает <<раскрываться>> правило, т.е. доказывается каждое целевое утверждение в теле правила последовательно слева направо
-	auto(Name, City, Model, Color, \_),    abonent(Name, Telephone, adress(City, \_, \_, \_)),    depositor(Name, City, Bank, \_, \_)
+	auto(Name, City, Model, Color, \_),
+    abonent(Name, Telephone, adress(City, \_, \_, \_)),
+    depositor(Name, City, Bank, \_, \_)
 	
 	& Заносится в стек auto(Name, City, bmw, red, \_) \\ \hline
 
@@ -246,7 +295,10 @@ goal  Model = bmw,  Color = red,  nameCityPhoneBankByAuto(Model, Color, Name,
 \end{longtable}
 
 \begin{lstlisting}[caption=Пример 3. ]
-goal  Model = bmw,  Color = silver,  nameCityPhoneBankByAuto(Model, Color, Name, City, 
+goal
+  Model = bmw,
+  Color = silver,
+  nameCityPhoneBankByAuto(Model, Color, Name, City, 
 					Telephone, Bank).
 \end{lstlisting}
 
@@ -257,7 +309,9 @@ goal  Model = bmw,  Color = silver,  nameCityPhoneBankByAuto(Model, Color, Na
  	№ шага & Сравниваемые термы; результат; подстановка, если есть  & Дальнейшие действия: прямой ход или откат \\ \hline
 	1 & По nameCityPhoneBankByAuto(Model, Color, Name, City, Telephone, Bank) = nameCityPhoneBankByAuto(bmw, silver, Name, City, Telephone, Bank) ищется системой определение отношения (по имени предиката и списку (числу) аргументов) & Определение отношения найдено, заносится в стек nameCityPhoneBankByAuto(bmw, silver, Name, City, Telephone, Bank), прямой ход \\ \hline
 	2 & Начинает <<раскрываться>> правило, т.е. доказывается каждое целевое утверждение в теле правила последовательно слева направо
-	auto(Name, City, Model, Color, \_),    abonent(Name, Telephone, adress(City, \_, \_, \_)),    depositor(Name, City, Bank, \_, \_)
+	auto(Name, City, Model, Color, \_),
+    abonent(Name, Telephone, adress(City, \_, \_, \_)),
+    depositor(Name, City, Bank, \_, \_)
 	
 	& Заносится в стек auto(Name, City, bmw, silver, \_) \\ \hline
 
@@ -337,11 +391,11 @@ nameCityPhoneBankByAuto(bmw, red, Name, City, Telephone, Bank) = nameCityPhoneBa
 
 \item Что такое процедура?
 
-В Visual Прологе предложения с одним и тем же предикатом в заголовке должны идти одно за другим. Такая совокупность предложений называется \textbf{процедурой}. 
+В Visual Прологе предложения с одним и тем же предикатом в заголовке и одной и той же арностью должны идти одно за другим. Такая совокупность предложений называется \textbf{процедурой}. 
 
 \item Сколько в БЗ  текущего задания процедур?
 
-3 -- «Телефонный справочник», «Автомобили», «Вкладчики банков»
+4 -- abonent, auto, depositor, nameCityPhoneBankByAuto
 
 \item Что такое пример терма, это частный случай терма, пример? Как строится пример? 
 
