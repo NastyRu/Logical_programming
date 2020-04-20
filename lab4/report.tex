@@ -1,0 +1,393 @@
+\documentclass[a4paper,14pt]{extreport} % формат документа
+
+\usepackage{amsmath}
+\usepackage{cmap} % поиск в ПДФ
+\usepackage[T2A]{fontenc} % кодировка
+\usepackage[utf8]{inputenc} % кодировка исходного текста
+\usepackage[english,russian]{babel} % локализация и переносы
+\usepackage[left = 2cm, right = 1cm, top = 2cm, bottom = 2 cm]{geometry} % поля
+\usepackage{listings}
+\usepackage{graphicx} % для вставки рисунков
+\usepackage{amsmath}
+\usepackage{float}
+\usepackage{longtable}
+\usepackage{multirow}
+\graphicspath{{pictures/}}
+\DeclareGraphicsExtensions{.pdf,.png,.jpg}
+\newcommand{\anonsection}[1]{\section*{#1}\addcontentsline{toc}{section}{#1}}
+
+\lstset{ %
+	language=Prolog,                % Язык программирования 
+	numbers=left,                   % С какой стороны нумеровать          
+	frame=single,                    % Добавить рамку
+}
+
+\begin{document}
+\begin{titlepage}
+
+    \begin{table}[H]
+        \centering
+        \footnotesize
+        \begin{tabular}{cc}
+            \multirow{8}{*}{\includegraphics[scale=0.35]{bmstu.jpg}}
+            & \\
+            & \\
+            & \textbf{Министерство науки и высшего образования Российской Федерации} \\
+            & \textbf{Федеральное государственное бюджетное образовательное учреждение} \\
+            & \textbf{высшего образования} \\
+            & \textbf{<<Московский государственный технический} \\
+            & \textbf{университет имени Н.Э. Баумана>>} \\
+            & \textbf{(МГТУ им. Н.Э. Баумана)} \\
+        \end{tabular}
+    \end{table}
+
+    \vspace{-2.5cm}
+
+    \begin{flushleft}
+        \rule[-1cm]{\textwidth}{3pt}
+        \rule{\textwidth}{1pt}
+    \end{flushleft}
+
+    \begin{flushleft}
+        \small
+        ФАКУЛЬТЕТ
+        \underline{<<Информатика и системы управления>>\ \ \ \ \ \ \ 
+        \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 
+    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ } \\
+        КАФЕДРА
+        \underline{<<Программное обеспечение ЭВМ и
+        информационные технологии>>
+        \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+    \end{flushleft}
+
+    \vspace{4cm}
+
+    \begin{center}
+        \textbf{Лабораторная работа № 14} \\ 
+        \hfill
+        
+        \textbf{Работа программы на Prolog} \\
+        \vspace{0.5cm}
+        \textbf{} \\
+    \end{center}
+
+    \vspace{4cm}
+
+    \begin{flushleft}
+        \begin{tabular}{ll}
+            \textbf{Дисциплина} & Функциональное и логическое программирование \\
+            \textbf{Студент} & Сиденко А.Г. \\
+            \textbf{Группа} & ИУ7-63Б \\
+            \textbf{Преподаватель} & Толпинская Н.Б., Строганов Ю.В.  \\
+        \end{tabular}
+    \end{flushleft}
+
+    \vspace{4cm}
+
+   \begin{center}
+        Москва, 2020 г.
+    \end{center}
+
+\end{titlepage}
+
+\textbf{Задание}
+
+Составить программу, т.е. модель предметной области – базу знаний, объединив в ней информацию – знания:
+
+\begin{enumerate}
+\item \textbf{<<Телефонный справочник>>}: Фамилия, №тел, Адрес – структура (Город, Улица, №дома, №кв),
+\item \textbf{<<Автомобили>>}: Фамилия\_владельца, Марка, Цвет, Стоимость, и др.,
+\item \textbf{<<Вкладчики банков>>}: Фамилия, Банк, счет, сумма, др.
+\end{enumerate}
+
+Владелец может иметь несколько телефонов, автомобилей, вкладов (Факты). В разных городах есть однофамильцы, в одном городе -- фамилия уникальна.
+
+\hfill
+
+Обеспечить возможность поиска: По Марке и Цвету автомобиля найти Фамилию, Город, Телефон и Банки, в которых владелец автомобиля имеет вклады. 
+
+\hfill
+
+\textbf{Программа}
+
+\begin{lstlisting}
+domains  lastname, city, street, model, color, bank = symbol.  telephone, house, flat, price, account, deposit = integer.  adress = adress(city, street, house, flat).predicates  abonent(lastname, telephone, adress).  auto(lastname, city, model, color, price).  depositor(lastname, city, bank, account, deposit).    nameCityPhoneBankByAuto(model, color, lastname, city, 
+					telephone, bank).clauses  abonent(ellen, 111111, adress(moscow, tverskaya, 1, 1)).  abonent(john, 222222, adress(moscow, arbat, 11, 112)).  abonent(tom, 333333, adress(moscow, presnya, 10, 11)).  abonent(eric, 444444, adress(moscow, pokrovka, 21, 55)).  abonent(mark, 555555, adress(moscow, solyanka, 13, 13)).  abonent(mark, 888888, adress(kazan, pushkin, 22, 130)).  abonent(bill, 666666, adress(ekb, lenin, 12, 88)).  abonent(bill, 777777, adress(spb, sadovaya, 1, 12)).  auto(ellen, moscow, bmw, red, 10000).  auto(tom, moscow, mersedes, white, 15000).  auto(eric, moscow, mersedes, white, 20000).  auto(eric, moscow, bmw, black, 15000).  auto(eric, moscow, porshe, red, 30000).  auto(mark, moscow, hyundai, silver, 7000).  auto(bill, ekb, hyundai, black, 10000).  auto(bill, spb, volvo, black, 13000).  depositor(ellen, moscow, sberbank, 10000, 2000).  depositor(john, moscow, sberbank, 10000, 3000).  depositor(john, moscow, vtb, 20000, 5000).  depositor(tom, moscow, gazprom, 5000, 3000).  depositor(eric, moscow, sberbank, 100000, 30000).  depositor(mark, moscow, sberbank, 10000, 2000).  depositor(mark, kazan, vtb, 10000, 2000).  depositor(mark, moscow, gazprom, 10000, 2000).    nameCityPhoneBankByAuto(Model, Color, Name, City, 
+					Telephone, Bank) :-    auto(Name, City, Model, Color, _),    abonent(Name, Telephone, adress(City, _, _, _)),    depositor(Name, City, Bank, _, _).
+\end{lstlisting}
+
+\begin{lstlisting}[caption=Пример 1. ]
+goal  Model = mersedes,  Color = white,  nameCityPhoneBankByAuto(Model, Color, Name, City, 
+					Telephone, Bank).
+\end{lstlisting}
+
+\includegraphics[scale=0.8]{ex1}
+
+\begin{longtable}{|p{1.1cm}|p{8.5cm}|p{7cm}|}
+	\hline
+ 	№ шага & Сравниваемые термы; результат; подстановка, если есть  & Дальнейшие действия: прямой ход или откат \\ \hline
+	1 & По nameCityPhoneBankByAuto(Model, Color, Name, City, Telephone, Bank) = nameCityPhoneBankByAuto(mersedes, white, Name, City, Telephone, Bank) ищется системой определение отношения (по имени предиката и списку (числу) аргументов) & Определение отношения найдено, заносится в стек nameCityPhoneBankByAuto(mersedes, white, Name, City, Telephone, Bank), прямой ход \\ \hline
+	2 & Начинает <<раскрываться>> правило, т.е. доказывается каждое целевое утверждение в теле правила последовательно слева направо
+	auto(Name, City, Model, Color, \_),    abonent(Name, Telephone, adress(City, \_, \_, \_)),    depositor(Name, City, Bank, \_, \_)
+	
+	& Заносится в стек auto(Name, City, mersedes, white, \_) \\ \hline
+
+	3 & По auto(Name, City, mersedes, white, \_)  ищется системой определение отношения (по имени предиката и списку (числу) аргументов) & Определение отношения найдено \\ \hline
+	4 & Унификация auto(ellen, moscow, bmw, red, 10000) с auto(Name, City, mersedes, white, \_) & Результат сравнения термов: false, переход к следующей строке (прямой ход) \\ \hline
+	5 & Унификация auto(tom, moscow, mersedes, white, 15000) с auto(Name, City, mersedes, white, \_)  & Результат сравнения термов: true, Name примет значение tom, City примет значение moscow. Установим маркер.  Анонимные переменные не связываются со значением. Переход к следующему целевому утверждению в теле правила (прямой ход) \\ \hline
+	
+	6 & Следующее целевое утверждение abonent(Name, Telephone, adress(City, \_, \_, \_)) & Заносится в стек abonent(tom, Telephone, adress(moscow, \_, \_, \_))   \\ \hline
+	7 & По abonent(tom, Telephone, adress(moscow, \_, \_, \_))  ищется системой определение отношения (по имени предиката и списку (числу) аргументов) & Определение отношения найдено \\ \hline
+	
+	8 & Унификация abonent(ellen, 111111, adress (moscow, tverskaya, 1, 1)) с abonent(tom, Telephone, adress(moscow, \_, \_, \_)) & Результат сравнения термов: false, переход к следующей строке (прямой ход) \\ \hline
+	9 & Унификация abonent(john, 222222, adress(moscow, arbat, 11, 112)) с abonent(tom, Telephone, adress(moscow, \_, \_, \_)) & Результат сравнения термов: false, переход к следующей строке (прямой ход) \\ \hline
+	10 & Унификация abonent(tom, 333333, adress(moscow, presnya, 10, 11)) с abonent(tom, Telephone, adress(moscow, \_, \_, \_)) & Результат сравнения термов: true, Telephone примет значение 333333, Street примет значение presnya. Установим маркер.  Анонимные переменные не связываются со значением. Переход к следующему целевому утверждению в теле правила (прямой ход) \\ \hline
+	
+	11 & По depositor(tom, moscow, Bank, \_, \_) ищется системой определение отношения (по имени предиката и списку (числу) аргументов) & Определение отношения найдено \\ \hline
+	12 & Унификация depositor(ellen, moscow, sberbank, 10000, 2000) с depositor(tom, moscow, Bank, \_, \_)& Результат сравнения термов: false, переход к следующей строке (прямой ход) \\ \hline
+	13 & Унификация depositor(john, moscow, sberbank, 10000, 3000) с depositor(tom, moscow, Bank, \_, \_) & Результат сравнения термов: false, переход к следующей строке (прямой ход) \\ \hline
+	14 & Унификация depositor(john, moscow, vtb, 20000, 5000) с depositor(tom, moscow, Bank, \_, \_) & Результат сравнения термов: false, переход к следующей строке (прямой ход) \\ \hline
+	15 & Унификация depositor(tom, moscow, gazprom, 5000, 3000) с depositor(tom, moscow, Bank, \_, \_) & Результат сравнения термов:  true, вывод результата, переход к следующей строке (прямой ход) \\ \hline
+	16 & Унификация depositor(eric, moscow, sberbank, 100000, 30000) с depositor(tom, moscow, Bank, \_, \_) & Результат сравнения термов: false, переход к следующей строке (прямой ход) \\ \hline
+	17 & Унификация depositor(mark, moscow, sberbank, 10000, 2000 с depositor(tom, moscow, Bank, \_, \_) & Результат сравнения термов: false, переход к следующей строке (прямой ход) \\ \hline
+	18 & Унификация depositor(mark, kazan, vtb, 10000, 2000) с depositor(tom, moscow, Bank, \_, \_) & Результат сравнения термов:  false, переход к следующей строке (прямой ход) \\ \hline
+	19 & Унификация depositor(mark, moscow, gazprom, 10000, 2000) с depositor(tom, moscow, Bank, \_, \_) &  Результат сравнения термов: false, в базе знаний больше ни одного утверждения с заданным именем, возврат, достаем из стека depositor(tom, moscow, Bank, \_, \_) \\ \hline
+	
+	20 & Унификация abonent(eric, 444444, adress(moscow, pokrovka, 21, 55)) с abonent(tom, Telephone, adress(moscow, \_, \_, \_)) & Результат сравнения термов: false, переход к следующей строке (прямой ход) \\ \hline
+	21 & Унификация abonent(mark, 555555, adress(moscow, solyanka, 13, 13)) с abonent(tom, Telephone, adress(moscow, \_, \_, \_)) & Результат сравнения термов: false, переход к следующей строке (прямой ход) \\ \hline
+	22 & Унификация abonent(mark, 888888, adress(kazan, pushkin, 22, 130)) с abonent(tom, Telephone, adress(moscow, \_, \_, \_)) & Результат сравнения термов: false, переход к следующей строке (прямой ход) \\ \hline
+	23 & Унификация abonent(bill, 666666, adress(ekb, lenin, 12, 88)) с abonent(tom, Telephone, adress(moscow, \_, \_, \_)) & Результат сравнения термов: false, переход к следующей строке (прямой ход) \\ \hline
+	24 & Унификация abonent(bill, 777777, adress(spb, sadovaya, 1, 12)) с abonent(tom, Telephone, adress(moscow, \_, \_, \_)) & Результат сравнения термов: false, в базе знаний больше ни одного утверждения с заданным именем, возврат, достаем из стека abonent(tom, Telephone, adress(moscow, \_, \_, \_)) \\ \hline
+	
+	25 & Унификация auto(eric, moscow, mersedes, white, 20000) с auto(Name, City, mersedes, white, \_)  & Результат сравнения термов: true, Name примет значение eric, City примет значение moscow. Установим маркер.  Анонимные переменные не связываются со значением. Переход к следующему целевому утверждению в теле правила (прямой ход) \\ \hline
+	
+	26 & Следующее целевое утверждение abonent(Name, Telephone, adress(City, \_, \_, \_)) & Заносится в стек abonent(eric, Telephone, adress(moscow, \_, \_, \_))   \\ \hline
+	27 & По abonent(eric, Telephone, adress(moscow, \_, \_, \_))  ищется системой определение отношения (по имени предиката и списку (числу) аргументов) & Определение отношения найдено \\ \hline
+	
+	28 & Унификация abonent(ellen, 111111, adress (moscow, tverskaya, 1, 1)) с abonent(eric, Telephone, adress(moscow, \_, \_, \_)) & Результат сравнения термов: false, переход к следующей строке (прямой ход) \\ \hline
+	29 & Унификация abonent(john, 222222, adress(moscow, arbat, 11, 112)) с abonent(eric, Telephone, adress(moscow, \_, \_, \_)) & Результат сравнения термов: false, переход к следующей строке (прямой ход) \\ \hline
+	30 & Унификация abonent(tom, 333333, adress(moscow, presnya, 10, 11)) с abonent(eric, Telephone, adress(moscow, \_, \_, \_)) & Результат сравнения термов: false, переход к следующей строке (прямой ход) \\ \hline
+	
+	31 & Унификация abonent(eric, 444444, adress(moscow, pokrovka, 21, 55)) с abonent(tom, Telephone, adress(moscow, \_, \_, \_)) & Результат сравнения термов: true, Telephone примет значение 444444, Street примет значение pokrovka. Установим маркер.  Анонимные переменные не связываются со значением. Переход к следующему целевому утверждению в теле правила (прямой ход) \\ \hline
+	
+	32 & По depositor(eric, moscow, Bank, \_, \_) ищется системой определение отношения (по имени предиката и списку (числу) аргументов) & Определение отношения найдено \\ \hline
+	33 & Унификация depositor(ellen, moscow, sberbank, 10000, 2000) с depositor(eric, moscow, Bank, \_, \_)& Результат сравнения термов: false, переход к следующей строке (прямой ход) \\ \hline
+	34 & Унификация depositor(john, moscow, sberbank, 10000, 3000) с depositor(eric, moscow, Bank, \_, \_) & Результат сравнения термов: false, переход к следующей строке (прямой ход) \\ \hline
+	35 & Унификация depositor(john, moscow, vtb, 20000, 5000) с depositor(eric, moscow, Bank, \_, \_) & Результат сравнения термов: false, переход к следующей строке (прямой ход) \\ \hline
+	36 & Унификация depositor(tom, moscow, gazprom, 5000, 3000) с depositor(eric, moscow, Bank, \_, \_) & Результат сравнения термов: false, переход к следующей строке (прямой ход)  \\ \hline
+	37 & Унификация depositor(eric, moscow, sberbank, 100000, 30000) с depositor(eric, moscow, Bank, \_, \_) & Результат сравнения термов:  true, вывод результата, переход к следующей строке (прямой ход)\\ \hline
+	38 & Унификация depositor(mark, moscow, sberbank, 10000, 2000 с depositor(eric, moscow, Bank, \_, \_) & Результат сравнения термов: false, переход к следующей строке (прямой ход) \\ \hline
+	39 & Унификация depositor(mark, kazan, vtb, 10000, 2000) с depositor(eric, moscow, Bank, \_, \_) & Результат сравнения термов:  false, переход к следующей строке (прямой ход) \\ \hline
+	40 & Унификация depositor(mark, moscow, gazprom, 10000, 2000) с depositor(eric, moscow, Bank, \_, \_) &  Результат сравнения термов: false, в базе знаний больше ни одного утверждения с заданным именем, возврат, достаем из стека depositor(eric, moscow, Bank, \_, \_) \\ \hline
+	
+	41 & Унификация abonent(mark, 555555, adress(moscow, solyanka, 13, 13)) с abonent(eric, Telephone, adress(moscow, \_, \_, \_)) & Результат сравнения термов: false, переход к следующей строке (прямой ход) \\ \hline
+	42 & Унификация abonent(mark, 888888, adress(kazan, pushkin, 22, 130)) с abonent(eric, Telephone, adress(moscow, \_, \_, \_)) & Результат сравнения термов: false, переход к следующей строке (прямой ход) \\ \hline
+	43 & Унификация abonent(bill, 666666, adress(ekb, lenin, 12, 88)) с abonent(eric, Telephone, adress(moscow, \_, \_, \_)) & Результат сравнения термов: false, переход к следующей строке (прямой ход) \\ \hline
+	44 & Унификация abonent(bill, 777777, adress(spb, sadovaya, 1, 12)) с abonent(eric, Telephone, adress(moscow, \_, \_, \_)) & Результат сравнения термов: false, в базе знаний больше ни одного утверждения с заданным именем, возврат, достаем из стека abonent(eric, Telephone, adress(moscow, \_, \_, \_)) ) \\ \hline
+
+	45 & Унификация auto(eric, moscow, bmw, black, 15000) с auto(Name, City, mersedes, white, \_)  & Результат сравнения термов: false, переход к следующей строке (прямой ход) \\ \hline
+	46 & Унификация auto(eric, moscow, porshe, red, 30000) с auto(Name, City, mersedes, white, \_)  & Результат сравнения термов: false, переход к следующей строке (прямой ход) \\ \hline
+	47 & Унификация auto(mark, moscow, hyundai, silver, 7000) с auto(Name, City, mersedes, white, \_) & Результат сравнения термов: false, переход к следующей строке (прямой ход) \\ \hline
+	48 & Унификация auto(bill, ekb, hyundai, black, 10000) с auto(Name, City, mersedes, white, \_)  & Результат сравнения термов: false, переход к следующей строке (прямой ход) \\ \hline
+	49 & Унификация auto(bill, spb, volvo, black, 13000) с auto(Name, City, mersedes, white, \_)  & Результат сравнения термов: false, в базе знаний больше ни одного утверждения с заданным именем, возврат, достаем из стека auto(Name, City, mersedes, white, \_)  \\ \hline
+	50 & Достаем из стека nameCityPhoneBankByAuto(mersedes, white, Name, City, Telephone, Bank) & Стек пуст, завершение программы \\ \hline
+\end{longtable}
+
+\begin{lstlisting}[caption=Пример 2. ]
+goal  Model = bmw,  Color = red,  nameCityPhoneBankByAuto(Model, Color, Name, City, 
+					Telephone, Bank).
+\end{lstlisting}
+
+\includegraphics[scale=0.8]{ex2}
+
+\begin{longtable}{|p{1.1cm}|p{8.5cm}|p{7cm}|}
+	\hline
+ 	№ шага & Сравниваемые термы; результат; подстановка, если есть  & Дальнейшие действия: прямой ход или откат \\ \hline
+	1 & По nameCityPhoneBankByAuto(Model, Color, Name, City, Telephone, Bank) = nameCityPhoneBankByAuto(mersedes, white, Name, City, Telephone, Bank) ищется системой определение отношения (по имени предиката и списку (числу) аргументов) & Определение отношения найдено, заносится в стек nameCityPhoneBankByAuto(bmw, red, Name, City, Telephone, Bank), прямой ход \\ \hline
+	2 & Начинает <<раскрываться>> правило, т.е. доказывается каждое целевое утверждение в теле правила последовательно слева направо
+	auto(Name, City, Model, Color, \_),    abonent(Name, Telephone, adress(City, \_, \_, \_)),    depositor(Name, City, Bank, \_, \_)
+	
+	& Заносится в стек auto(Name, City, bmw, red, \_) \\ \hline
+
+	3 & По auto(Name, City, bmw, red, \_)  ищется системой определение отношения (по имени предиката и списку (числу) аргументов) & Определение отношения найдено \\ \hline
+	4 & Унификация auto(ellen, moscow, bmw, red, 10000) с auto(Name, City, bmw, red, \_) & Результат сравнения термов:  true, Name примет значение ellen, City примет значение moscow. Установим маркер.  Анонимные переменные не связываются со значением. Переход к следующему целевому утверждению в теле правила (прямой ход) \\ \hline
+	
+	5 & Следующее целевое утверждение abonent(Name, Telephone, adress(City, \_, \_, \_)) & Заносится в стек abonent(ellen, Telephone, adress(moscow, \_, \_, \_))   \\ \hline
+	6 & По abonent(ellen, Telephone, adress(moscow, \_, \_, \_))  ищется системой определение отношения (по имени предиката и списку (числу) аргументов) & Определение отношения найдено \\ \hline
+	
+	7 & Унификация abonent(ellen, 111111, adress (moscow, tverskaya, 1, 1)) с abonent(ellen, Telephone, adress(moscow, \_, \_, \_)) & Результат сравнения термов: true, Telephone примет значение 111111, Street примет значение tverskaya. Установим маркер. Анонимные переменные не связываются со значением. Переход к следующему целевому утверждению в теле правила (прямой ход) \\ \hline
+	
+	8 & По depositor(ellen, moscow, Bank, \_, \_) ищется системой определение отношения (по имени предиката и списку (числу) аргументов) & Определение отношения найдено \\ \hline
+	9 & Унификация depositor(ellen, moscow, sberbank, 10000, 2000) с depositor(ellen, moscow, Bank, \_, \_)& Результат сравнения термов: true, вывод результата, переход к следующей строке (прямой ход) \\ \hline
+	10 & Унификация depositor(john, moscow, sberbank, 10000, 3000) с depositor(ellen, moscow, Bank, \_, \_) & Результат сравнения термов: false, переход к следующей строке (прямой ход) \\ \hline
+	11 & Унификация depositor(john, moscow, vtb, 20000, 5000) с depositor(ellen, moscow, Bank, \_, \_) & Результат сравнения термов: false, переход к следующей строке (прямой ход) \\ \hline
+	12 & Унификация depositor(tom, moscow, gazprom, 5000, 3000) с depositor(ellen, moscow, Bank, \_, \_) & Результат сравнения термов: false, переход к следующей строке (прямой ход) \\ \hline
+	13 & Унификация depositor(eric, moscow, sberbank, 100000, 30000) с depositor(ellen, moscow, Bank, \_, \_) & Результат сравнения термов: false, переход к следующей строке (прямой ход) \\ \hline
+	14 & Унификация depositor(mark, moscow, sberbank, 10000, 2000 с depositor(ellen, moscow, Bank, \_, \_) & Результат сравнения термов: false, переход к следующей строке (прямой ход) \\ \hline
+	15 & Унификация depositor(mark, kazan, vtb, 10000, 2000) с depositor(ellen, moscow, Bank, \_, \_) & Результат сравнения термов:  false, переход к следующей строке (прямой ход) \\ \hline
+	16 & Унификация depositor(mark, moscow, gazprom, 10000, 2000) с depositor(ellen, moscow, Bank, \_, \_) &  Результат сравнения термов: false, в базе знаний больше ни одного утверждения с заданным именем, возврат, достаем из стека depositor(ellen, moscow, Bank, \_, \_) \\ \hline
+	
+	17 & Унификация abonent(john, 222222, adress(moscow, arbat, 11, 112)) с abonent(ellen, Telephone, adress(moscow, \_, \_, \_)) & Результат сравнения термов: false, переход к следующей строке (прямой ход) \\ \hline
+	18 & Унификация abonent(tom, 333333, adress(moscow, presnya, 10, 11)) с abonent(ellen, Telephone, adress(moscow, \_, \_, \_)) & Результат сравнения термов: false, переход к следующей строке (прямой ход) \\ \hline
+	19 & Унификация abonent(eric, 444444, adress(moscow, pokrovka, 21, 55)) с abonent(ellen, Telephone, adress(moscow, \_, \_, \_)) & Результат сравнения термов: false, переход к следующей строке (прямой ход) \\ \hline
+	20 & Унификация abonent(mark, 555555, adress(moscow, solyanka, 13, 13)) с abonent(ellen, Telephone, adress(moscow, \_, \_, \_)) & Результат сравнения термов: false, переход к следующей строке (прямой ход) \\ \hline
+	21 & Унификация abonent(mark, 888888, adress(kazan, pushkin, 22, 130)) с abonent(ellen, Telephone, adress(moscow, \_, \_, \_)) & Результат сравнения термов: false, переход к следующей строке (прямой ход) \\ \hline
+	22 & Унификация abonent(bill, 666666, adress(ekb, lenin, 12, 88)) с abonent(ellen, Telephone, adress(moscow, \_, \_, \_)) & Результат сравнения термов: false, переход к следующей строке (прямой ход) \\ \hline
+	23 & Унификация abonent(bill, 777777, adress(spb, sadovaya, 1, 12)) с abonent(ellen, Telephone, adress(moscow, \_, \_, \_)) & Результат сравнения термов: false, в базе знаний больше ни одного утверждения с заданным именем, возврат, достаем из стека abonent(ellen, Telephone, adress(moscow, \_, \_, \_)) \\ \hline
+	
+	24 & Унификация auto(tom, moscow, mersedes, white, 15000) с auto(Name, City, bmw, red, \_)  & Результат сравнения термов: false, переход к следующей строке (прямой ход) \\ \hline
+	25 & Унификация auto(eric, moscow, mersedes, white, 20000) с auto(Name, City, bmw, red, \_)  & Результат сравнения термов: false, переход к следующей строке (прямой ход)) \\ \hline
+	26 & Унификация auto(eric, moscow, bmw, black, 15000) с auto(Name, City, bmw, red, \_)  & Результат сравнения термов: false, переход к следующей строке (прямой ход) \\ \hline
+	27 & Унификация auto(eric, moscow, porshe, red, 30000) с auto(Name, City, bmw, red, \_)  & Результат сравнения термов: false, переход к следующей строке (прямой ход) \\ \hline
+	28 & Унификация auto(mark, moscow, hyundai, silver, 7000) с auto(Name, City, bmw, red, \_) & Результат сравнения термов: false, переход к следующей строке (прямой ход) \\ \hline
+	29 & Унификация auto(bill, ekb, hyundai, black, 10000) с auto(Name, City, bmw, red, \_)  & Результат сравнения термов: false, переход к следующей строке (прямой ход) \\ \hline
+	30 & Унификация auto(bill, spb, volvo, black, 13000) с auto(Name, City, bmw, red, \_)  & Результат сравнения термов: false, в базе знаний больше ни одного утверждения с заданным именем, возврат, достаем из стека auto(Name, City, bmw, red, \_)  \\ \hline
+	31 & Достаем из стека nameCityPhoneBankByAuto(bmw, red, Name, City, Telephone, Bank) & Стек пуст, завершение программы \\ \hline
+\end{longtable}
+
+\begin{lstlisting}[caption=Пример 3. ]
+goal  Model = bmw,  Color = silver,  nameCityPhoneBankByAuto(Model, Color, Name, City, 
+					Telephone, Bank).
+\end{lstlisting}
+
+\includegraphics[scale=0.8]{ex3}
+
+\begin{longtable}{|p{1.1cm}|p{8.5cm}|p{7cm}|}
+	\hline
+ 	№ шага & Сравниваемые термы; результат; подстановка, если есть  & Дальнейшие действия: прямой ход или откат \\ \hline
+	1 & По nameCityPhoneBankByAuto(Model, Color, Name, City, Telephone, Bank) = nameCityPhoneBankByAuto(bmw, silver, Name, City, Telephone, Bank) ищется системой определение отношения (по имени предиката и списку (числу) аргументов) & Определение отношения найдено, заносится в стек nameCityPhoneBankByAuto(bmw, silver, Name, City, Telephone, Bank), прямой ход \\ \hline
+	2 & Начинает <<раскрываться>> правило, т.е. доказывается каждое целевое утверждение в теле правила последовательно слева направо
+	auto(Name, City, Model, Color, \_),    abonent(Name, Telephone, adress(City, \_, \_, \_)),    depositor(Name, City, Bank, \_, \_)
+	
+	& Заносится в стек auto(Name, City, bmw, silver, \_) \\ \hline
+
+	3 & По auto(Name, City, bmw, silver, \_) ищется системой определение отношения (по имени предиката и списку (числу) аргументов) & Определение отношения найдено \\ \hline
+	4 & Унификация auto(ellen, moscow, bmw, red, 10000) с auto(Name, City, bmw, silver, \_) & Результат сравнения термов: false, переход к следующей строке (прямой ход) \\ \hline
+	5 & Унификация auto(tom, moscow, mersedes, white, 15000) с auto(Name, City, bmw, silver, \_) & Результат сравнения термов: false, переход к следующей строке (прямой ход) \\ \hline
+	6 & Унификация auto(eric, moscow, mersedes, white, 20000) с auto(Name, City, bmw, silver, \_) & Результат сравнения термов: false, переход к следующей строке (прямой ход) \\ \hline
+	7 & Унификация auto(eric, moscow, bmw, black, 15000) с auto(Name, City, bmw, silver, \_) & Результат сравнения термов: false, переход к следующей строке (прямой ход) \\ \hline
+	8 & Унификация auto(eric, moscow, porshe, red, 30000) с auto(Name, City, bmw, silver, \_) & Результат сравнения термов: false, переход к следующей строке (прямой ход) \\ \hline
+	9 & Унификация auto(mark, moscow, hyundai, silver, 7000) с auto(Name, City, bmw, silver, \_) & Результат сравнения термов: false, переход к следующей строке (прямой ход) \\ \hline
+	10 & Унификация auto(bill, ekb, hyundai, black, 10000) с auto(Name, City, bmw, silver, \_) & Результат сравнения термов: false, переход к следующей строке (прямой ход) \\ \hline
+	11 & Унификация auto(bill, spb, volvo, black, 13000) с auto(Name, City, bmw, silver, \_) & Результат сравнения термов: false, в базе знаний больше ни одного утверждения с заданным именем, возврат, достаем из стека auto(Name, City, bmw, silver, \_) \\ \hline
+	12 & Достаем из стека nameCityPhoneBankByAuto(bmw, silver, Name, City, Telephone, Bank) & Стек пуст, завершение программы \\ \hline
+\end{longtable}
+
+\textbf{Сравнение объема работ при разных порядках следования в БЗ  процедур, и знаний в них: («Телефонный справочник», «Автомобили», «Вкладчики банков», или: «Автомобили», «Вкладчики банков», «Телефонный справочник»)}
+
+Заметим, что в пролог-программах предложения, определяющие один и тот же предикат, принято располагать вместе. Эти предложения иногда называют пролог-процедурой. В общем случае пролог-программа состоит из фактов и набора процедур.
+
+Prolog обрабатывает правило в порядке следования предикатов в его теле, а значит порядок в Базе Знаний предикатов, никак не повлияет на получение ответа. 
+
+Порядок найденных решений соответствует порядку расположения в пролог-программе подтверждающих фактов, поскольку при доказательстве целей-вопросов интерпретатор последовательно просматривает предложения программы, начиная с первого.
+
+Но объем работ остается тем же, таким образом таблицы остаются теми же. 
+
+\newpage
+
+\textbf{Порядок работы алгоритма унификации вопроса и подходящего заголовка правила. }
+
+nameCityPhoneBankByAuto(bmw, red, Name, City, Telephone, Bank) = nameCityPhoneBankByAuto(Model, Color, Name, City, Telephone, Bank) :- auto(Name, City, Model, Color, \_), abonent(Name, Telephone, adress(City, \_, \_, \_)), depositor(Name, City, Bank, \_, \_)
+
+\begin{longtable}{|p{1.2cm}|p{2.4cm}|p{6cm}|p{1.2 cm}|p{6cm}|}
+	\hline
+ 	Шаг унификации & Результи-рующая ячейка  & Рабочее поле & Пункт алгоритма & Стек \\ \hline
+	0& & &1& nameCityPhoneBankByAuto (bmw, red, Name, City, Telephone, Bank) = nameCityPhoneBankByAuto (Model, Color, Name, City, Telephone, Bank) :- auto (Name, City, Model, Color, \_), abonent (Name, Telephone, adress(City, \_, \_, \_)), depositor (Name, City, Bank, \_, \_)  \\ \hline
+	1& & nameCityPhoneBankByAuto (bmw, red, Name, City, Telephone, Bank) = nameCityPhoneBankByAuto (Model, Color, Name, City, Telephone, Bank) :- auto (Name, City, Model, Color, \_), abonent (Name, Telephone, adress(City, \_, \_, \_)), depositor (Name, City, Bank, \_, \_) 
+	
+	$\rightarrow$ &e& auto (Name, City, bmw, red, \_) = auto(ellen, moscow, bmw, red, 10000), abonent (Name, Telephone, adress(City, \_, \_, \_)), depositor (Name, City, Bank, \_, \_) \\ \hline
+	2 & Name = ellen, 
+	
+	City = moscow & $\leftarrow$ 
+	
+	auto (Name, City, bmw, red, \_) = auto(ellen, moscow, bmw, red, 10000)
+	
+	$\rightarrow$ & e & abonent (Name, Telephone, adress(City, \_, \_, \_)) = abonent(ellen, 111111, adress(moscow, tverskaya, 1, 1)), depositor (Name, City, Bank, \_, \_) \\ \hline
+	3& Name = ellen, 
+	
+	City = moscow
+	
+	Telephone = 111111 & $\leftarrow$ 
+	
+	abonent (ellen, Telephone, adress(moscow, \_, \_, \_)) = abonent(ellen, 111111, adress(moscow, tverskaya, 1, 1))
+	&e & depositor (ellen, moscow, Bank, \_, \_)= depositor(ellen, moscow, sberbank, 10000, 2000) \\ \hline
+	
+	4& Name = ellen, 
+	
+	City = moscow
+	
+	Telephone = 111111 
+	
+	Bank = sberbank & $\leftarrow$ 
+	
+	depositor (ellen, moscow, Bank, \_, \_) = depositor(ellen, moscow, sberbank, 10000, 2000)
+	
+	$\rightarrow$ &e & \\ \hline
+	Вывод & подстанов-ка & Успех &  & Стек пуст \\ \hline
+\end{longtable}
+
+\hfill
+
+\textbf{Ответы на вопросы}
+
+\begin{enumerate} 
+\item В какой части правила сформулировано знание? Это знание о чем, с формальной точки зрения?
+
+Знания о предметной области выражаются на языке Пролог в виде предложений, называемых утверждениями (clauses). 
+
+\item Что такое процедура?
+
+В Visual Прологе предложения с одним и тем же предикатом в заголовке должны идти одно за другим. Такая совокупность предложений называется \textbf{процедурой}. 
+
+\item Сколько в БЗ  текущего задания процедур?
+
+3 -- «Телефонный справочник», «Автомобили», «Вкладчики банков»
+
+\item Что такое пример терма, это частный случай терма, пример? Как строится пример? 
+
+Пусть $\theta = \{ X_1 = t_1, X_2= t_2, … , X_n = t_n \}$ -- подстановка,  тогда результат применения подстановки к терму обозначается: $A\theta$. Применение подстановки заключается в замене каждого вхождения переменной $X_i$  на соответствующий терм. Терм $B$ называется \textbf{примером терма} $A$, если существует такая подстановка $\theta$, что $B=A\theta$.
+
+В процессе выполнения программы -- система, используя встроенный алгоритм унификации, пытается обосновать возможность истинности вопроса, строя подстановки и примеры термов (вопроса и формулировки знания), используя базу знаний. 
+
+\item Что такое наиболее общий пример?
+
+Терм $C$ называется \textbf{общим примером термов} $A$ и $B$, если существуют такие подстановки $\theta_1$ и $\theta_2$, что $C = A\theta_1$  и  $C = B\theta_2$
+
+\item Назначение и результат работы алгоритма унификации. Что значит двунаправленная передача параметров при работе алгоритма унификации, поясните на примере одного из случаев пункта  3.
+
+Унификация двух термов -- это основной шаг доказательства. В процессе работы система выполняет большое число унификаций.
+\textbf{Унификация} -- операция, которая позволяет формализовать процесс логического вывода. 
+
+С помощью алгоритма унификации происходит двунаправленная передача параметров процедурам. Например, из внешнего мира в программу для дальнейшего использования или из программы во внешний мир -- значения интересующего нас параметра. 
+
+\item В каком случае запускается механизм отката?
+
+Откат дает возможность получить много решений в одном вопросе к программе. 
+
+Во всех точках программы, где существуют альтернативы, в стек заносятся точки возврата. 
+
+Если впоследствии окажется, что выбранный вариант не приводит к успеху, то осуществляется откат к последней из имеющихся в стеке точек программы, где был выбран один из альтернативных вариантов. 
+
+Выбирается очередной вариант, программа продолжает свою работу. Если все варианты в точке уже были использованы, то регистрируется неудачное завершение и осуществляется переход на предыдущую точку возврата, если такая есть. 
+
+При откате все связанные переменные, которые были означены после этой точки, опять освобождаются.
+
+\item Виды и назначение переменных в Prolog. Примеры из задания.  Почему использованы те или другие переменные (примеры из задания)?
+
+При поступлении вопроса с переменной в Пролог-систему. Например:
+\begin{lstlisting}
+universe("Mark", X).
+\end{lstlisting}
+
+X -- переменная, входящая в вопрос, изначально является \textbf{неконкретизированной}. Пролог просматривает базу данных в поисках факта, сопоставимого с вопросом. Если неконкретизированная переменная появляется в качестве одного из аргументов, то Пролог считает, что такой аргумент сопоставим с любым другим аргументом, находящимся в том же факте. При обнаружении такого факта переменная X становится \textbf{конкретизированной}, обозначая объект, являющийся вторым аргументом найденного факта.
+
+Это относится только к именованным переменным. \textbf{Анонимные переменные} не могут быть связаны со значением. Используются, если нас не интересует значение данного параметра. 
+\begin{lstlisting}
+depositor (ellen, moscow, Bank, \_, \_). 
+\end{lstlisting}
+
+Если составные термы, факты, правила и вопросы не содержат переменных, то они называются основными. Составные термы, факты, правила и вопросы в момент фиксации в программе могут содержать переменные, тогда они называются неосновными. 
+
+ \end{enumerate}
+ 
+\end{document}
