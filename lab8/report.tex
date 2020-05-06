@@ -192,12 +192,30 @@
 \textbf{Программа}
 
 \begin{lstlisting}
-predicates  factorial(integer, integer).  fibonachi(integer, integer).clauses  factorial(0, 1):- !.  factorial(Next, FactorialNext):-     Cur = Next - 1,     factorial(Cur, FactorialCur),    FactorialNext = FactorialCur * Next.      fibonachi(0, 0):- !.  fibonachi(1, 1):- !.  fibonachi(Next, FibonachiNext):-     Cur = Next - 1,    Prev = Cur - 1,    fibonachi(Cur, FibonachiCur),    fibonachi(Prev, FibonachiPrev),    FibonachiNext = FibonachiCur + FibonachiPrev.
+predicates
+  factorial(integer, integer).
+  fibonachi(integer, integer).
+clauses
+  factorial(0, 1):- !.
+  factorial(Next, FactorialNext):- 
+    Cur = Next - 1, 
+    factorial(Cur, FactorialCur),
+    FactorialNext = FactorialCur * Next.
+    
+  fibonachi(0, 0):- !.
+  fibonachi(1, 1):- !.
+  fibonachi(Next, FibonachiNext):- 
+    Cur = Next - 1,
+    Prev = Cur - 1,
+    fibonachi(Cur, FibonachiCur),
+    fibonachi(Prev, FibonachiPrev),
+    FibonachiNext = FibonachiCur + FibonachiPrev.
 \end{lstlisting}
 
 \textbf{Приведем таблицу для задания 1. }
 \begin{lstlisting}
-goal  factorial(5, Rez).
+goal
+  factorial(5, Rez).
 \end{lstlisting}
 
 \begin{longtable}{|p{0.5cm}|p{5cm}|p{6cm}|p{5.5cm}|}
@@ -252,7 +270,8 @@ goal  factorial(5, Rez).
 
 \textbf{Приведем таблицу для задания 2. }
 \begin{lstlisting}
-goal  fibonachi(4, Rez).
+goal
+  fibonachi(4, Rez).
 \end{lstlisting}
 
 \begin{longtable}{|p{0.5cm}|p{5cm}|p{6cm}|p{5.5cm}|}
@@ -334,6 +353,10 @@ goal  fibonachi(4, Rez).
 \end{longtable}
 
 \hfill
+
+\textbf{Вывод}
+
+Эффективный способ организации рекурсии --  хвостовая рекурсия. Эффективность рекурсивной процедуры повышается благодаря отсечению неперспективных путей поиска решения. Используя <<!>> -- отсечение. Которое сократит количество выполняемых унификаций для достижения максимальной эффективности работы системы. 
 
 \textbf{Ответы на вопросы}
 
