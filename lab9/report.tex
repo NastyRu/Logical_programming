@@ -193,12 +193,35 @@
 \textbf{Программа}
 
 \begin{lstlisting}
-domains  list = integer*  length, summa = integerpredicates  length(list, length).  sum(list, summa).  odd_sum(list, summa).clauses  length([], 0):-!.  length([_|Tail], Length):-    length(Tail, TailLength),    Length = TailLength + 1.      sum([], 0):-!.  sum([Head|Tail], Sum):-    sum(Tail, TailSum),    Sum = TailSum + Head.      odd_sum([], 0):-!.  odd_sum([_], 0):-!.  odd_sum([_, Second|Tail], Sum):-    odd_sum(Tail, TailSum),    Sum = TailSum + Second.
+domains
+  list = integer*
+  length, summa = integer
+predicates
+  length(list, length).
+  sum(list, summa).
+  odd_sum(list, summa).
+clauses
+  length([], 0):-!.
+  length([_|Tail], Length):-
+    length(Tail, TailLength),
+    Length = TailLength + 1.
+    
+  sum([], 0):-!.
+  sum([Head|Tail], Sum):-
+    sum(Tail, TailSum),
+    Sum = TailSum + Head.
+    
+  odd_sum([], 0):-!.
+  odd_sum([_], 0):-!.
+  odd_sum([_, Second|Tail], Sum):-
+    odd_sum(Tail, TailSum),
+    Sum = TailSum + Second.
 \end{lstlisting}
 
 \textbf{Приведем таблицу для нахождения длины. }
 \begin{lstlisting}
-goal  length([1,2,4], Length).
+goal
+  length([1,2,4], Length).
 \end{lstlisting}
 
 \begin{longtable}{|p{0.5cm}|p{5cm}|p{6cm}|p{5.5cm}|}
@@ -232,6 +255,10 @@ goal  length([1,2,4], Length).
 \end{longtable}
 
 \hfill
+
+\textbf{Вывод}
+
+Эффективный способ организации рекурсии --  хвостовая рекурсия. Эффективность рекурсивной процедуры повышается благодаря отсечению неперспективных путей поиска решения. Используя <<!>> -- отсечение. Которое сократит количество выполняемых унификаций для достижения максимальной эффективности работы системы. 
 
 \textbf{Ответы на вопросы}
 
