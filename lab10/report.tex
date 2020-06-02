@@ -1,0 +1,308 @@
+\documentclass[a4paper,14pt]{extreport} % формат документа
+
+\usepackage{amsmath}
+\usepackage{cmap} % поиск в ПДФ
+\usepackage[T2A]{fontenc} % кодировка
+\usepackage[utf8]{inputenc} % кодировка исходного текста
+\usepackage[english,russian]{babel} % локализация и переносы
+\usepackage[left = 2cm, right = 1cm, top = 2cm, bottom = 2 cm]{geometry} % поля
+\usepackage{listings}
+\usepackage{graphicx} % для вставки рисунков
+\usepackage{amsmath}
+\usepackage{float}
+\usepackage{longtable}
+\usepackage{multirow}
+\graphicspath{{pictures/}}
+\DeclareGraphicsExtensions{.pdf,.png,.jpg}
+\newcommand{\anonsection}[1]{\section*{#1}\addcontentsline{toc}{section}{#1}}
+
+\lstset{ %
+	language=Prolog,                % Язык программирования 
+	numbers=left,                   % С какой стороны нумеровать          
+	frame=single,                    % Добавить рамку
+	 escapebegin=\begin{russian}\commentfont,
+    escapeend=\end{russian},
+    literate={Ö}{{\"O}}1
+    {Ä}{{\"A}}1
+    {Ü}{{\"U}}1
+    {ß}{{\ss}}1
+    {ü}{{\"u}}1
+    {ä}{{\"a}}1
+    {ö}{{\"o}}1
+    {~}{{\textasciitilde}}1
+    {а}{{\selectfont\char224}}1
+    {б}{{\selectfont\char225}}1
+    {в}{{\selectfont\char226}}1
+    {г}{{\selectfont\char227}}1
+    {д}{{\selectfont\char228}}1
+    {е}{{\selectfont\char229}}1
+    {ё}{{\"e}}1
+    {ж}{{\selectfont\char230}}1
+    {з}{{\selectfont\char231}}1
+    {и}{{\selectfont\char232}}1
+    {й}{{\selectfont\char233}}1
+    {к}{{\selectfont\char234}}1
+    {л}{{\selectfont\char235}}1
+    {м}{{\selectfont\char236}}1
+    {н}{{\selectfont\char237}}1
+    {о}{{\selectfont\char238}}1
+    {п}{{\selectfont\char239}}1
+    {р}{{\selectfont\char240}}1
+    {с}{{\selectfont\char241}}1
+    {т}{{\selectfont\char242}}1
+    {у}{{\selectfont\char243}}1
+    {ф}{{\selectfont\char244}}1
+    {х}{{\selectfont\char245}}1
+    {ц}{{\selectfont\char246}}1
+    {ч}{{\selectfont\char247}}1
+    {ш}{{\selectfont\char248}}1
+    {щ}{{\selectfont\char249}}1
+    {ъ}{{\selectfont\char250}}1
+    {ы}{{\selectfont\char251}}1
+    {ь}{{\selectfont\char252}}1
+    {э}{{\selectfont\char253}}1
+    {ю}{{\selectfont\char254}}1
+    {я}{{\selectfont\char255}}1
+    {А}{{\selectfont\char192}}1
+    {Б}{{\selectfont\char193}}1
+    {В}{{\selectfont\char194}}1
+    {Г}{{\selectfont\char195}}1
+    {Д}{{\selectfont\char196}}1
+    {Е}{{\selectfont\char197}}1
+    {Ё}{{\"E}}1
+    {Ж}{{\selectfont\char198}}1
+    {З}{{\selectfont\char199}}1
+    {И}{{\selectfont\char200}}1
+    {Й}{{\selectfont\char201}}1
+    {К}{{\selectfont\char202}}1
+    {Л}{{\selectfont\char203}}1
+    {М}{{\selectfont\char204}}1
+    {Н}{{\selectfont\char205}}1
+    {О}{{\selectfont\char206}}1
+    {П}{{\selectfont\char207}}1
+    {Р}{{\selectfont\char208}}1
+    {С}{{\selectfont\char209}}1
+    {Т}{{\selectfont\char210}}1
+    {У}{{\selectfont\char211}}1
+    {Ф}{{\selectfont\char212}}1
+    {Х}{{\selectfont\char213}}1
+    {Ц}{{\selectfont\char214}}1
+    {Ч}{{\selectfont\char215}}1
+    {Ш}{{\selectfont\char216}}1
+    {Щ}{{\selectfont\char217}}1
+    {Ъ}{{\selectfont\char218}}1
+    {Ы}{{\selectfont\car219}}1
+    {Ь}{{\selectfont\char220}}1
+    {Э}{{\selectfont\char221}}1
+    {Ю}{{\selectfont\char222}}1
+    {Я}{{\selectfont\char223}}1
+    {і}{{\selectfont\char105}}1
+    {ї}{{\selectfont\char168}}1
+    {є}{{\selectfont\char185}}1
+    {ґ}{{\selectfont\char160}}1
+    {І}{{\selectfont\char73}}1
+    {Ї}{{\selectfont\char136}}1
+    {Є}{{\selectfont\char153}}1
+    {Ґ}{{\selectfont\char128}}1
+}
+
+\begin{document}
+\begin{titlepage}
+
+    \begin{table}[H]
+        \centering
+        \footnotesize
+        \begin{tabular}{cc}
+            \multirow{8}{*}{\includegraphics[scale=0.35]{bmstu.jpg}}
+            & \\
+            & \\
+            & \textbf{Министерство науки и высшего образования Российской Федерации} \\
+            & \textbf{Федеральное государственное бюджетное образовательное учреждение} \\
+            & \textbf{высшего образования} \\
+            & \textbf{<<Московский государственный технический} \\
+            & \textbf{университет имени Н.Э. Баумана>>} \\
+            & \textbf{(МГТУ им. Н.Э. Баумана)} \\
+        \end{tabular}
+    \end{table}
+
+    \vspace{-2.5cm}
+
+    \begin{flushleft}
+        \rule[-1cm]{\textwidth}{3pt}
+        \rule{\textwidth}{1pt}
+    \end{flushleft}
+
+    \begin{flushleft}
+        \small
+        ФАКУЛЬТЕТ
+        \underline{<<Информатика и системы управления>>\ \ \ \ \ \ \ 
+        \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 
+    \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ } \\
+        КАФЕДРА
+        \underline{<<Программное обеспечение ЭВМ и
+        информационные технологии>>
+        \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+    \end{flushleft}
+
+    \vspace{4cm}
+
+    \begin{center}
+        \textbf{Лабораторная работа № 20} \\ 
+        \hfill
+        
+        \textbf{Формирование и модификация списков на Prolog} \\
+        \vspace{0.5cm}
+        \textbf{} \\
+    \end{center}
+
+    \vspace{4cm}
+
+    \begin{flushleft}
+        \begin{tabular}{ll}
+            \textbf{Дисциплина} & Функциональное и логическое программирование \\
+            \textbf{Студент} & Сиденко А.Г. \\
+            \textbf{Группа} & ИУ7-63Б \\
+            \textbf{Преподаватель} & Толпинская Н.Б., Строганов Ю.В.  \\
+        \end{tabular}
+    \end{flushleft}
+
+    \vspace{4cm}
+
+   \begin{center}
+        Москва, 2020 г.
+    \end{center}
+
+\end{titlepage}
+
+\textbf{Задание}
+
+Используя хвостовую рекурсию, разработать, комментируя аргументы, эффективную программу, позволяющую:
+
+\begin{enumerate}
+\item Сформировать список из элементов числового списка, больших заданного значения;
+\item Сформировать список из элементов, стоящих на нечетных позициях исходного списка (нумерация от 0);
+\item Удалить заданный элемент из списка (один или все вхождения);
+\item Преобразовать список в множество (можно использовать ранее разработанные процедуры).
+\end{enumerate}
+
+Убедиться в правильности результатов. 
+
+Для одного из вариантов вопроса и 1-ого задания  составить таблицу, отражающую конкретный порядок работы системы
+
+
+
+\hfill
+
+\textbf{Программа}
+
+\begin{lstlisting}
+domains  list = integer*  num = integerpredicates  over_number(list, num, list).  odd_list(list, list).  delete_number(list, num, list).  member(num, list).  multi_list(list, list).clauses      over_number([], _, []):-!.  over_number([X|Tail], Num, [X|List]):-    X > Num,    over_number(Tail, Num, List),!.  over_number([_|Tail], Num, List):-    over_number(Tail, Num, List).      odd_list([], []):-!.  odd_list([_], []):-!.  odd_list([_, Second|Tail], [Second|OddTail]):-    odd_list(Tail, OddTail).      delete_number([], _, []):-!.  delete_number([Num|Tail], Num, List):-    delete_number(Tail, Num, List),!.  delete_number([X|Tail], Num, [X|List]):-    delete_number(Tail, Num, List).      member(Num, [Num|_]):-!.  member(Num, [_|Tail]):-    member(Num, Tail).  multi_list([], []):-!.  multi_list([Num|Tail], List):-    member(Num, Tail),    multi_list(Tail, List),!.  multi_list([Num|Tail], [Num|List]):-    multi_list(Tail, List).
+\end{lstlisting}
+
+\textbf{Приведем таблицу для задания 1. }
+\begin{lstlisting}
+goal  over_number([5,1,2,3], 2, List).
+\end{lstlisting}
+
+\begin{longtable}{|p{0.5cm}|p{5cm}|p{6cm}|p{5.5cm}|}
+	\hline
+ 	№ шага & Состояние резольвенты & Сравниваемые термы; результат; подстановка, если есть  & Дальнейшие действия: прямой ход или откат \\ \hline
+	1 & $over\_number$([5,1,2,3], 2, List) & По $over\_number$([5,1,2,3], 2, List)) ищется системой определение отношения (по имени предиката и списку (числу) аргументов) & Определение отношения найдено, заносится в стек $over\_number$([5,1,2,3], 2, List), прямой ход \\ \hline
+	
+	2 &5 > 2, $over\_number$([1,2,3], 2, List) & Начинает <<раскрываться>> правило, т.е. доказывается каждое целевое утверждение в теле правила последовательно слева направо
+	X > Num, $over\_number$(Tail, Num, List) & Прямой ход\\ \hline
+	
+	3 & $over\_number$([1,2,3], 2, List) & 5>2 & Успешная унификация, переход к следующему целевому утверждению \\ \hline
+	
+	4 & $over\_number$([1,2,3], 2, List) & По $over\_number$([1,2,3], 2, List)) ищется системой определение отношения (по имени предиката и списку (числу) аргументов) & Определение отношения найдено, заносится в стек $over\_number$([1,2,3], 2, List), прямой ход \\ \hline
+	
+	5 &1 > 2, $over\_number$([2,3], 2, List) & Начинает <<раскрываться>> правило, т.е. доказывается каждое целевое утверждение в теле правила последовательно слева направо
+	X > Num, $over\_number$(Tail, Num, List) & Прямой ход\\ \hline
+	
+	6 & $over\_number$([2,3], 2, List) & 1>2 & Неуспешная унификация, переход к следующему определению с таким именем \\ \hline
+	
+	7 & $over\_number$([2,3], 2, List) & Начинает <<раскрываться>> правило, т.е. доказывается каждое целевое утверждение в теле правила последовательно слева направо
+	$over\_number$(Tail, Num, List) & Прямой ход\\ \hline
+	
+	8 & $over\_number$([2,3], 2, List) & По $over\_number$([2,3], 2, List)) ищется системой определение отношения (по имени предиката и списку (числу) аргументов) & Определение отношения найдено, заносится в стек $over\_number$([2,3], 2, List), прямой ход \\ \hline
+	
+	9 &2 > 2, $over\_number$([3], 2, List) & Начинает <<раскрываться>> правило, т.е. доказывается каждое целевое утверждение в теле правила последовательно слева направо
+	X > Num, $over\_number$(Tail, Num, List) & Прямой ход\\ \hline
+	
+	10 & $over\_number$([3], 2, List) & 2>2 & Неуспешная унификация, переход к следующему определению с таким именем \\ \hline
+	
+	11 & $over\_number$([3], 2, List) & Начинает <<раскрываться>> правило, т.е. доказывается каждое целевое утверждение в теле правила последовательно слева направо
+	$over\_number$(Tail, Num, List) & Прямой ход\\ \hline
+	
+	12 & $over\_number$([3], 2, List) & По $over\_number$([3], 2, List)) ищется системой определение отношения (по имени предиката и списку (числу) аргументов) & Определение отношения найдено, заносится в стек $over\_number$([3], 2, List), прямой ход \\ \hline
+	
+	13 &3 > 2, $over\_number$([], 2, List) & Начинает <<раскрываться>> правило, т.е. доказывается каждое целевое утверждение в теле правила последовательно слева направо
+	X > Num, $over\_number$(Tail, Num, List) & Прямой ход\\ \hline
+	
+	14 & $over\_number$([], 2, List) & 2>2 & Успешная унификация, переход к следующему целевому утверждению \\ \hline
+	
+	15 & $over\_number$([], 2, List) & По $over\_number$([], 2, List)) ищется системой определение отношения (по имени предиката и списку (числу) аргументов) & Определение отношения найдено, заносится в стек $over\_number$([], 2, List), прямой ход \\ \hline
+	
+	16 &   & Унификация $over\_number$([], 2, List)  с $over\_number$([], $\_$, []) & Унификация успешна, List=[], отсечение, возврат из стека $over\_number$([], 2, List)\\ \hline	
+	
+	17 & Резольента пуста & Поочередно достаем из стека и подставляем X, List & List =[3], достаем из стека $over\_number$([3], 2, List), откат \\ \hline
+	
+	18 & Резольента пуста & Поочередно достаем из стека и подставляем X, List & List =[3], достаем из стека $over\_number$([2,3], 2, List), откат \\ \hline
+	
+	19 & Резольента пуста & Поочередно достаем из стека и подставляем X, List & List =[3], достаем из стека $over\_number$([1,2,3], 2, List), откат \\ \hline
+	
+	20 & Резольента пуста & Поочередно достаем из стека и подставляем X, List & List =[5,3], достаем из стека $over\_number$([5,1,2,3], 2, List), откат \\ \hline
+	
+	21 & Резольента пуста &  & Стек пуст. Вывод результата. Завершение программы.  \\ \hline
+\end{longtable}
+
+\hfill
+
+\textbf{Вывод}
+
+Эффективный способ организации рекурсии --  хвостовая рекурсия. Эффективность рекурсивной процедуры повышается благодаря отсечению неперспективных путей поиска решения. Используя <<!>> -- отсечение. Которое сократит количество выполняемых унификаций для достижения максимальной эффективности работы системы. 
+
+\hfill
+
+\textbf{Ответы на вопросы}
+
+\begin{enumerate} 
+\item Как организуется хвостовая рекурсия в Prolog? 
+
+Хвостовая рекурсия: Для ее осуществления рекурсивный вызов определяемого предиката должен быть последней подцелью в теле рекурсивного правила и к моменту рекурсивного вызова не должно остаться точек возврата (непроверенных альтернатив). 
+
+\item Какое первое состояние резольвенты?
+
+Вопрос. 
+
+\item Каким способом можно разделить список на части, какие, требования к частям?
+
+В Prolog существует более общий способ доступа к элементам списка. Для этого используется метод разбиения списка на начало и остаток. Для этого используется вертикальная черта (|) за последним элементом начала. 
+
+Начало списка -- это группа первых элементов, не менее одного. Остаток списка -- обязательно список (может быть пустой), всегда один. 
+
+\item Как выделить за один шаг первые два подряд идущих элемента списка? Как выделить 1-й и 3-й элемент за один шаг?
+
+Два подряд идущих:
+
+\begin{lstlisting}
+[First, Second|Tail]
+\end{lstlisting}
+
+1-й и 3-й:
+
+\begin{lstlisting}
+[First, _, Third|Tail]
+\end{lstlisting}
+
+\item Как формируется новое состояние резольвенты?
+
+Резольвента - текущая цель, существующая на любой стадии вычислений. Резольвенты порождаются целью и каким-либо правилом или фактом, которые просматриваются последовательно сверху вниз. Если резольвента существует при наиболее общей унификации, она вычисляется. Если пустая резольвента с помощью такой стратегии не найдена, то ответ на вопрос отрицателен.
+
+\item Когда останавливается работа системы? Как это определяется на формальном уровне?
+
+Когда стек пуст. 
+
+\end{enumerate}
+ 
+\end{document}
